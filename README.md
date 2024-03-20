@@ -7,4 +7,6 @@
 * remove_greater command
 * remove_lower
 * javadoc комментарии
+* надо переписать add команду
+
 Остальное +- работает
