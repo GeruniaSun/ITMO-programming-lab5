@@ -51,7 +51,7 @@ public class Receiver {
         }
     }
 
-    public void add(){
+    private Ticket create(){
         Scanner in = new Scanner(System.in);
 
         var builder = new Builder();
@@ -196,8 +196,12 @@ public class Receiver {
             System.out.println("что-то мне нехорошо, мистер пользователь...");
             System.exit(777);
         }
-        Ticket novichok = builder.build();
-        System.out.println("поздравляю вы добавили билет: " + novichok);
+        return builder.build();
+    }
+
+    public void add(){
+        data.add(this.create());
+        System.out.println("Вы успешно добавили билет");
     }
 
     public void printDescending() {
