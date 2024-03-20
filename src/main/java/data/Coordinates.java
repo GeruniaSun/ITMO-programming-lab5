@@ -1,8 +1,7 @@
-package Data;
+package data;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 public class Coordinates {

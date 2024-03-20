@@ -1,4 +1,4 @@
-package Commands;
+package commands;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +22,7 @@ public class Invoker {
         commandMap.put("save", new Save(receiver));
         commandMap.put("remove_greater", new RemoveGreater(receiver));
         commandMap.put("remove_lower", new RemoveLower(receiver));
+        commandMap.put("add_if_max", new AddIfMax(receiver));
     }
 
     public void runApp(){

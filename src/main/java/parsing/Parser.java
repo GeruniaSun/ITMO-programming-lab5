@@ -1,6 +1,6 @@
-package Parsing;
+package parsing;
 
-import Data.Ticket;
+import data.Ticket;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 

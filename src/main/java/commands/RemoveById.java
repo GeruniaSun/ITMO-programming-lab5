@@ -1,8 +1,5 @@
-package Commands;
+package commands;
 
-import Data.Ticket;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class RemoveById implements Command{

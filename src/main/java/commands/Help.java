@@ -1,8 +1,7 @@
-package Commands;
+package commands;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public class Help implements Command{
 

@@ -1,6 +1,6 @@
-import Commands.*;
-import Data.Ticket;
-import Parsing.Parser;
+import commands.*;
+import data.Ticket;
+import parsing.Parser;
 
 import java.io.*;
 import java.util.*;

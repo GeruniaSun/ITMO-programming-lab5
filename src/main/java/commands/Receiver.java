@@ -1,10 +1,10 @@
-package Commands;
+package commands;
 
-import Data.Coordinates;
-import Data.Ticket;
-import Data.Ticket.Builder;
-import Data.Venue;
-import Parsing.Parser;
+import data.Coordinates;
+import data.Ticket;
+import data.Ticket.Builder;
+import data.Venue;
+import parsing.Parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -204,6 +204,11 @@ public class Receiver {
         System.out.println("Вы успешно добавили билет");
     }
 
+    public void addIfMax(){
+        var noob = this.create();
+        if (noob.compareTo(Collections.max(data)) > 0) data.add(noob);
+    }
+
     public void removeGreater(){
         Ticket compared = this.create();
         data.removeIf(ticket -> ticket.compareTo(compared) > 0);
@@ -235,5 +240,9 @@ public class Receiver {
         var success = data.removeIf(ticket -> ticket.getId().equals(id));
         if (success) System.out.println("Элемент успешно удалён");
         else System.out.println("В коллекции нет элемента с id " + id);
+    }
+
+    public void update(Long id){
+        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     }
 }

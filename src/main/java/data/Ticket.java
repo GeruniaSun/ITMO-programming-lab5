@@ -1,13 +1,9 @@
-package Data;
+package data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.LinkedList;
 import java.util.Objects;
-import java.util.logging.Level;
 
 /**
  * Класс описывающий сущность билета

@@ -1,6 +1,6 @@
-package Commands;
+package commands;
 
-import Data.Ticket;
+import data.Ticket;
 
 import java.util.Arrays;
 import java.util.List;
