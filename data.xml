@@ -1,0 +1,42 @@
+<Storage>
+  <item>
+    <id>1</id>
+    <name>FACE concert</name>
+    <coordinates>
+      <x>5.5</x>
+      <y>5</y>
+    </coordinates>
+    <price>123456789</price>
+    <type>VIP</type>
+    <venue>
+      <id>1</id>
+      <name>ice hall</name>
+      <capacity>999</capacity>
+      <address>
+        <street>Komsomolskaya</street>
+      </address>
+    </venue>
+  </item>
+  <item>
+  <id>2</id>
+  <name>ALBLACK 52 concert</name>
+  <coordinates>
+    <x>7.5</x>
+    <y>6</y>
+  </coordinates>
+  <price>567891234</price>
+  <type>USUAL</type>
+  <venue/>
+  </item>
+  <item>
+  <id>3</id>
+  <name>anacondaz concert</name>
+  <coordinates>
+    <x>3.5</x>
+    <y>9</y>
+  </coordinates>
+  <price>987654321</price>
+  <type>CHEAP</type>
+  <venue/>
+  </item>
+</Storage>
