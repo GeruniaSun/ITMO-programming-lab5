@@ -20,6 +20,8 @@ public class Invoker {
         commandMap.put("clear", new Clear(receiver));
         commandMap.put("remove_by_id", new RemoveById(receiver));
         commandMap.put("save", new Save(receiver));
+        commandMap.put("remove_greater", new RemoveGreater(receiver));
+        commandMap.put("remove_lower", new RemoveLower(receiver));
     }
 
     public void runApp(){

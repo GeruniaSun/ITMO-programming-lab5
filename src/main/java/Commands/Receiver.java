@@ -204,6 +204,16 @@ public class Receiver {
         System.out.println("Вы успешно добавили билет");
     }
 
+    public void removeGreater(){
+        Ticket compared = this.create();
+        data.removeIf(ticket -> ticket.compareTo(compared) > 0);
+    }
+
+    public void removeLower(){
+        Ticket compared = this.create();
+        data.removeIf(ticket -> ticket.compareTo(compared) < 0);
+    }
+
     public void printDescending() {
         data.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
     }
