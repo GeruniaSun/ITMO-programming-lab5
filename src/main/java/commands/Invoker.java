@@ -1,9 +1,6 @@
 package commands;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Invoker {
     private final Map<String, Command> commandMap = new HashMap<>();
@@ -23,6 +20,7 @@ public class Invoker {
         commandMap.put("remove_greater", new RemoveGreater(receiver));
         commandMap.put("remove_lower", new RemoveLower(receiver));
         commandMap.put("add_if_max", new AddIfMax(receiver));
+        commandMap.put("update", new Update(receiver));
     }
 
     public void runApp(){
@@ -37,6 +35,9 @@ public class Invoker {
                     commandArguments = commandWithArgs.subList(1, commandWithArgs.size());
                 }
                 this.runCommand(commandMap.get(commandName), commandArguments);
+            } catch (NoSuchElementException e) {
+                System.out.println("вы какие-то гадости делаете. Закрываю приложение");
+                System.exit(999);
             }
             catch (Exception e){
                 System.out.println(e.getMessage());

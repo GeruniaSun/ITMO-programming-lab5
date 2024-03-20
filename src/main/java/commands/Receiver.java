@@ -51,10 +51,8 @@ public class Receiver {
         }
     }
 
-    private Ticket create(){
+    private Ticket create(Builder builder){
         Scanner in = new Scanner(System.in);
-
-        var builder = new Builder();
 
         for(int i = 0; i < recursionLimit; i++) {
             try {
@@ -200,22 +198,26 @@ public class Receiver {
     }
 
     public void add(){
-        data.add(this.create());
+        var builder = new Ticket.Builder();
+        data.add(this.create(builder));
         System.out.println("Вы успешно добавили билет");
     }
 
     public void addIfMax(){
-        var noob = this.create();
+        var builder = new Ticket.Builder();
+        var noob = this.create(builder);
         if (noob.compareTo(Collections.max(data)) > 0) data.add(noob);
     }
 
     public void removeGreater(){
-        Ticket compared = this.create();
+        var builder = new Ticket.Builder();
+        Ticket compared = this.create(builder);
         data.removeIf(ticket -> ticket.compareTo(compared) > 0);
     }
 
     public void removeLower(){
-        Ticket compared = this.create();
+        var builder = new Ticket.Builder();
+        Ticket compared = this.create(builder);
         data.removeIf(ticket -> ticket.compareTo(compared) < 0);
     }
 
@@ -243,6 +245,18 @@ public class Receiver {
     }
 
     public void update(Long id){
-        //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        Ticket oldTicket = null;
+        for (Ticket ticket : data){
+            if (ticket.getId().equals(id)){
+                oldTicket = ticket;
+                break;
+            }
+        }
+        if (oldTicket == null) System.out.println("Элемента с таким id не существует");
+        else {
+            var builder = new Ticket.Builder(oldTicket);
+            this.create(builder);
+            System.out.println("Значения полей элемента успешно обновлены");
+        }
     }
 }
