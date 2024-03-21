@@ -12,9 +12,10 @@ public class RemoveGreater implements Command{
 
     @Override
     public void execute(List<String> args) {
-        if (args != null) throw new IllegalArgumentException("Команда remove_greater не принимает никаких аргументов, " +
+        if (this.receiver.isConsoleFlag() && args != null)
+            throw new IllegalArgumentException("Команда remove_greater не принимает никаких аргументов, " +
                 "значение element нужно вводить с новой строки");
-        receiver.removeGreater();
+        receiver.removeGreater(args);
     }
 
     @Override

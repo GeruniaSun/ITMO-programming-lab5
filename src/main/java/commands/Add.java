@@ -12,8 +12,9 @@ public class Add implements Command{
 
     @Override
     public void execute(List<String> args) {
-        if (args != null) throw new IllegalArgumentException("Команда add не принимает никаких аргументов");
-        receiver.add();
+        if (args != null && this.receiver.isConsoleFlag())
+            throw new IllegalArgumentException("Команда add не принимает никаких аргументов");
+        receiver.add(args);
     }
 
     @Override

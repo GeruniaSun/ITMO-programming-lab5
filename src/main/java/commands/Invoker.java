@@ -1,5 +1,7 @@
 package commands;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Invoker {
@@ -21,14 +23,16 @@ public class Invoker {
         commandMap.put("remove_lower", new RemoveLower(receiver));
         commandMap.put("add_if_max", new AddIfMax(receiver));
         commandMap.put("update", new Update(receiver));
+        commandMap.put("execute_script", new ExecuteScript(receiver));
     }
 
-    public void runApp(){
-        Scanner in = new Scanner(System.in);
-        while (true){
+    public void runApp(InputStreamReader inStream){
+        Scanner in = new Scanner(inStream);
+        while (in.hasNextLine()){
             try {
-                List<String> commandWithArgs = List.of(in.nextLine().split(" "));
-                if (commandWithArgs.isEmpty()) {throw new IllegalArgumentException("Вы ничего не ввели");}
+                var input = in.nextLine();
+                if (input.isBlank()) {throw new NullPointerException("Вы ничего не ввели");}
+                List<String> commandWithArgs = List.of(input.split(" "));
                 String commandName = commandWithArgs.get(0);
                 List<String> commandArguments = null;
                 if (commandWithArgs.size() >= 2){

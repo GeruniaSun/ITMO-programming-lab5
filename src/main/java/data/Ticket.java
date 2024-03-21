@@ -84,6 +84,13 @@ public class Ticket implements Comparable<Ticket> {
             return this;
         }
 
+        public boolean isReadyToBuild(){
+            return !(newTicket.name == null
+                    || newTicket.coordinates == null
+                    || newTicket.price == null
+                    || newTicket.type == null);
+        }
+
         public Ticket build(){
             return newTicket;
         }

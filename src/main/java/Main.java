@@ -3,7 +3,10 @@ import data.Ticket;
 import parsing.Parser;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
+import java.util.regex.Pattern;
+
 /*
  * Это моя 5-ая лабораторная по предмету программирование
  * 1 курс 2 семестр
@@ -30,6 +33,6 @@ public class Main {
 
         var receiver = new Receiver(storage,filename);
         var invoker = new Invoker(receiver);
-        invoker.runApp();
+        invoker.runApp(new InputStreamReader(System.in));
     }
 }

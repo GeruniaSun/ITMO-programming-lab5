@@ -12,9 +12,10 @@ public class RemoveLower implements Command{
 
     @Override
     public void execute(List<String> args) {
-        if (args != null) throw new IllegalArgumentException("Команда remove_lower не принимает никаких аргументов, " +
+        if (this.receiver.isConsoleFlag() && args != null)
+            throw new IllegalArgumentException("Команда remove_lower не принимает никаких аргументов, " +
                 "значение element нужно вводить с новой строки");
-        receiver.removeLower();
+        receiver.removeLower(args);
     }
 
     @Override
