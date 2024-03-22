@@ -27,6 +27,7 @@ public class Main {
         Set<Ticket> storage = null;
         try {
             storage = new LinkedHashSet<>(Parser.getFromFile(storageFile));
+            System.out.println("файл успешно прочитан");
         } catch (IOException e) {
             System.out.println("Файла с таким именем не существует, либо он недоступен. Перезапустите приложение.");
         }
