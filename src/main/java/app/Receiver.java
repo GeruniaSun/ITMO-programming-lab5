@@ -10,39 +10,88 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+/**
+ * <h1>Класс приемник</h1>
+ * экземпляр класса содержит методы выполняющие всю логику команд и некоторые служебные
+ */
 public class Receiver {
+    /**
+     * Коллекция, которой манипулирует приложение
+     */
     private final Collection<Ticket> data;
+    /**
+     * Имя файла, которое было передано в качестве аргумента при запуске приложения
+     */
     private final String filename;
-    private InputStreamReader inputStream = new InputStreamReader(System.in);
-    private InputStreamReader lastInputStream = new InputStreamReader(System.in);
+    /**
+     * Текущий поток ввода, по умолчанию системный ввод, но может смениться на файловый
+     */
+    private InputStreamReader inputStreamReader = new InputStreamReader(System.in);
+    /**
+     * Поле которое хранит предыдущее значения поля inputStreamReader
+     */
+    private InputStreamReader lastInputStreamReader = new InputStreamReader(System.in);
+    /**
+     * Флаг истинный, если в данный момент ввод происходит с консоли, ложный в противном случае
+     */
     private boolean consoleFlag = true;
+    /**
+     * Поле в которое записываются файлы во время выполнения команды execute_script
+     * нужно для защиты от рекурсивных вызовов в скриптах
+     */
     private final Set<Path> recursionDefense = new HashSet<>();
 
+    /**
+     * Стандартный конструктор
+     * @param data коллекция экземпляров класса {@link data.Ticket}
+     * @param filename имя файла, которое было передано в качестве аргумента при запуске приложения
+     */
     public Receiver(Storage data, String filename) {
         this.data = data.collection();
         this.filename = filename;
     }
 
+    /**
+     * Метод соответствующий команде help<br>
+     * команда help выводит список доступных команд и краткое описание их действия
+     * @param commands список всех доступных пользователю команд
+     */
     public void help(Collection<Command> commands){
         System.out.println("вот список доступных вам команд: ");
         commands.forEach(cmd -> System.out.println(cmd.description()));
     }
 
+    /**
+     * Метод соответствующий команде info<br>
+     * команда info выводит информацию о коллекции
+     */
     public void info(){
         System.out.println("Тип коллекции: " + data.getClass().getSimpleName());
         System.out.println("Размер коллекции: " + data.size());
     }
 
+    /**
+     * Метод соответствующий команде show<br>
+     * команда show выводит всю коллекцию
+     */
     public void show(){
         if (data.isEmpty()) System.out.println("Коллекция пуста. Используйте команду add, чтоб добавить элементы");
         data.forEach(System.out::println);
     }
 
+    /**
+     * Метод соответствующий команде exit<br>
+     * команда exit закрывает приложение
+     */
     public void exit(){
         System.out.println("Выход из приложения...");
         System.exit(666);
     }
 
+    /**
+     * Метод соответствующий команде save<br>
+     * команда save сохраняет коллекцию в файл переданный в качестве аргумента при запуске приложения
+     */
     public void save(){
         try {
             Parser.saveToFile(new File(filename),data);
@@ -52,8 +101,15 @@ public class Receiver {
         }
     }
 
+    /**
+     * Служебный метод для создания нового экземпляра класса {@link data.Ticket}
+     * введенного пользователем с консоли<br>
+     * не является доступной пользователю командой!!!
+     * @param builder объект строителя билета
+     * @return новоиспеченный билет
+     */
     private Ticket create(TicketBuilder builder){
-        var in = new Scanner(new BufferedReader(this.inputStream));
+        var in = new Scanner(new BufferedReader(this.inputStreamReader));
 
         while (this.consoleFlag || in.hasNextLine()) {
             try {
@@ -213,6 +269,13 @@ public class Receiver {
         } else throw new IllegalStateException("Что-то пошло не так во время описания билета");
     }
 
+    /**
+     * Служебный метод для создания нового экземпляра класса {@link data.Ticket}
+     * введенного пользователем в файле<br>
+     * не является доступной пользователю командой!!!
+     * @param builder объект строителя билета
+     * @return новоиспеченный билет
+     */
     private Ticket createFromFile(TicketBuilder builder, List<String> args){
         try {
             String input = String.join(" ", args);
@@ -242,6 +305,10 @@ public class Receiver {
         }
     }
 
+    /**
+     * Метод соответствующий команде add<br>
+     * команда add добавляет новый билет в коллекцию
+     */
     public void add(List<String> args){
         var builder = new TicketBuilder();
         try {
@@ -254,6 +321,10 @@ public class Receiver {
         }
     }
 
+    /**
+     * Метод соответствующий команде add_if_max<br>
+     * команда add_if_max добавляет новый билет в коллекцию, если он превосходит максимальный в коллекции
+     */
     public void addIfMax(List<String> args){
         try {
             var builder = new TicketBuilder();
@@ -267,6 +338,10 @@ public class Receiver {
         }
     }
 
+    /**
+     * Метод соответствующий команде remove_greater<br>
+     * команда remove_greater удаляет из коллекции все элементы, большие введенного
+     */
     public void removeGreater(List<String> args){
         try {
             var builder = new TicketBuilder();
@@ -280,6 +355,10 @@ public class Receiver {
         }
     }
 
+    /**
+     * Метод соответствующий команде remove_lower<br>
+     * команда remove_lower удаляет из коллекции все элементы, меньшие введенного
+     */
     public void removeLower(List<String> args){
         try {
             var builder = new TicketBuilder();
@@ -293,29 +372,59 @@ public class Receiver {
         }
     }
 
+    /**
+     * Метод соответствующий команде print_descending<br>
+     * команда print_descending выводит все элементы коллекции в порядке убывания
+     */
     public void printDescending() {
         data.stream().sorted(Comparator.reverseOrder()).forEach(System.out::println);
     }
 
+    /**
+     * Метод соответствующий команде filter_by_type<br>
+     * команда filter_by_type выводит все элементы коллекции с типом type
+     * @param type один из типов {@link data.Ticket.TicketType}
+     */
     public void filterByType(Ticket.TicketType type){
         data.stream().filter(ticket -> ticket.getType() == type).forEach(System.out::println);
     }
 
+    /**
+     * Метод соответствующий команде count_greater_than_type<br>
+     * команда count_greater_than_type выводит количество элементов коллекции с типом type
+     * @param type один из типов {@link data.Ticket.TicketType}
+     */
     public void countGreaterThanType(Ticket.TicketType type){
         System.out.println(data.stream().filter(ticket -> ticket.getType().compareTo(type) > 0).count());
     }
 
+    /**
+     * Метод соответствующий команде clear<br>
+     * команда clear очищает коллекцию
+     */
     public void clear(){
         data.clear();
         System.out.println("Коллекция успешно очищена");
     }
 
+    /**
+     * Метод соответствующий команде remove_by_id<br>
+     * команда remove_by_id удаляет из коллекции элемент по его id,
+     * в случае отсутствия элемента с нужным id коллекция не меняется
+     * @param id искомое id
+     */
     public void removeById(Long id){
         var success = data.removeIf(ticket -> ticket.getId().equals(id));
         if (success) System.out.println("Элемент успешно удалён");
         else System.out.println("В коллекции нет элемента с id " + id);
     }
 
+    /**
+     * Метод соответствующий команде update<br>
+     * команда update обновляет значения полей элемента по id,
+     * в случае отсутствия элемента с нужным id коллекция не меняется
+     * @param id искомое id
+     */
     public void update(Long id, List<String> args){
         Ticket oldTicket = null;
         for (Ticket ticket : data){
@@ -327,7 +436,8 @@ public class Receiver {
         if (oldTicket == null) System.out.println("Элемента с таким id не существует");
         else {
             try {
-                var builder = new TicketBuilder(oldTicket.getId());
+                var builder = new TicketBuilder();
+                builder.withId(oldTicket.getId());
                 if (consoleFlag){
                     data.remove(oldTicket);
                     data.add(this.create(builder));
@@ -339,6 +449,16 @@ public class Receiver {
         }
     }
 
+    /**
+     * Метод соответствующий команде execute_script<br>
+     * команда execute_script выполняет все команды из переданного файла<br>
+     * рекурсивные вызовы запрещены!<br>
+     * при командах с ошибками выводятся соответствующие сообщения об ошибках
+     * @param filename имя файла скрипта
+     * @throws AccessDeniedException если у программы нет прав, чтоб прочитать файл
+     * @throws FileNotFoundException если файла не существует
+     * @throws IllegalArgumentException при обнаружении рекурсивного вызова
+     */
     public void executeScript(String filename) throws AccessDeniedException, FileNotFoundException {
         var path = Path.of(filename).toAbsolutePath();
         if (!Files.isReadable(path))
@@ -347,27 +467,39 @@ public class Receiver {
             throw new IllegalArgumentException("в ваших скриптах обнаружена рекурсия, а рекурсия вредна для здоровья!");
         this.recursionDefense.add(path);
         var fileIn = new FileReader(path.toFile());
-        this.setInputStream(fileIn);
+        this.setInputStreamReader(fileIn);
         this.setConsoleFlag(false);
         var fileInvoker = new Invoker(this);
         var fileConsole = new AppConsole();
         System.out.println("начинаю читать ваш скрипт...");
         fileConsole.runApp(fileIn, fileInvoker);
         System.out.println("достигнут конец файла " + filename);
-        this.setInputStream(this.lastInputStream);
+        this.setInputStreamReader(this.lastInputStreamReader);
         this.setConsoleFlag(true);
         this.recursionDefense.clear();
     }
 
-    public void setInputStream(InputStreamReader inputStream) {
-        this.lastInputStream = this.inputStream;
-        this.inputStream = inputStream;
+    /**
+     * Метод для смены потока ввода
+     * @param inputStreamReader новый поток ввода (стандартный или файловый)
+     */
+    public void setInputStreamReader(InputStreamReader inputStreamReader) {
+        this.lastInputStreamReader = this.inputStreamReader;
+        this.inputStreamReader = inputStreamReader;
     }
 
+    /**
+     * Метод для проверки консольного флага
+     * @return истину если ввод происходит с консоли и ложь в противном случае
+     */
     public boolean isConsoleFlag() {
         return consoleFlag;
     }
 
+    /**
+     * Метод для изменения консольного флага
+     * @param consoleFlag флаг истинный, если ввод происходит с консоли и ложный в противном случае
+     */
     public void setConsoleFlag(boolean consoleFlag) {
         this.consoleFlag = consoleFlag;
     }

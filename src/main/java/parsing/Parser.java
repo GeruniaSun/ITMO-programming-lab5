@@ -10,7 +10,18 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * <h1>Класс предоставляющий методы для парсинга</h1>
+ * под парсингом подразумевается чтение и запись объектов коллекции в файлы формата XML
+ */
 public class Parser {
+    /**
+     * Метод для сохранения коллекции в файл
+     * @param file файл для записи
+     * @param data коллекция экземпляров класса {@link data.Ticket}
+     * @throws IOException если файл не найден или недоступен
+     * @throws AccessDeniedException если программа не может писать в файл
+     */
     public static void saveToFile(File file, Collection<Ticket> data) throws IOException{
         if (!Files.isWritable(file.toPath())) throw new
                 AccessDeniedException("У программы нет прав, чтоб писать в этот файл");
@@ -20,6 +31,13 @@ public class Parser {
         mpr.writeValue(out, data);
     }
 
+    /**
+     * Метод для чтения коллекции из файла
+     * @param file файл для чтения
+     * @return список объектов Ticket
+     * @throws IOException если файл не найден или недоступен
+     * @throws AccessDeniedException если программа не может читать из файла
+     */
     public static List<Ticket> getFromFile(File file) throws IOException{
         if (!Files.isReadable(file.toPath())) throw new
                 AccessDeniedException("У программы нет прав, чтоб прочитать этот файл");

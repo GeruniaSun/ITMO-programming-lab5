@@ -6,14 +6,28 @@ import data.Ticket;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <h1>Команда count_greater_than_type</h1>
+ * класс инкапсулирующий объект команды count_greater_than_type
+ */
 public class CountGreaterThanType implements Command{
-
+    /**
+     * Поле для связи с объектом приемника класса {@link Receiver} выполняющим команду
+     */
     private final Receiver receiver;
 
+    /**
+     * Стандартный конструктор
+     * @param receiver объект приемника
+     */
     public CountGreaterThanType(Receiver receiver){
         this.receiver = receiver;
     }
 
+    /**
+     * Переопределенные методы из интерфейса {@link commands.Command}
+     * логика описана в самом интерфейсе
+     */
     @Override
     public void execute(List<String> args) {
         if (args == null || args.isEmpty())

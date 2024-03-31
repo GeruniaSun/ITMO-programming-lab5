@@ -3,9 +3,17 @@ package app;
 import commands.*;
 import java.util.*;
 
+/**
+ * <h1>Класс инициатора</h1>
+ * инициатор - сущность запускающая команды и хранящая их список
+ */
 public class Invoker {
     private final Map<String, Command> commandMap = new HashMap<>();
 
+    /**
+     * Конструктор, задающий все доступные пользователю команды
+     * @param receiver объект приемника экземпляр класса {@link app.Receiver}
+     */
     public Invoker(Receiver receiver){
         commandMap.put("info", new Info(receiver));
         commandMap.put("help", new Help(receiver, commandMap.values()));
@@ -25,6 +33,11 @@ public class Invoker {
         commandMap.put("execute_script", new ExecuteScript(receiver));
     }
 
+    /**
+     * Метод для выполнения команды
+     * @param commandName имя команды
+     * @param args аргументы введенные пользователем вместе с командой
+     */
     void runCommand(String commandName, List<String> args){
         Command command = this.commandMap.get(commandName);
         if (command == null) throw new NullPointerException("Такой команды не существует. " + "\n" +

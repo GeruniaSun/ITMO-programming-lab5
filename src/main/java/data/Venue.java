@@ -4,17 +4,42 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import java.util.Objects;
 
+/**
+ * <h1>Класс описывающий сущность места проведения</h1>
+ * место проведения - необязательное поле экземпляра класса {@link data.Ticket}
+ */
 public class Venue {
+    /**
+     * Уникальный положительный номер места проведения в системе, значение этого поля генерируется автоматически
+     */
     @JacksonXmlProperty
-    private int id; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
-    public static int nextId = 0;
+    private int id;
+    /**
+     * Название места проведения<br>
+     * это поле не может быть null или пустой строкой
+     */
     @JacksonXmlProperty
-    private String name; //Поле не может быть null, Строка не может быть пустой
+    private String name;
+    /**
+     * Вместимость места проведения<br>
+     * значения поля должно быть положительным числом
+     */
     @JacksonXmlProperty
-    private int capacity; //Значение поля должно быть больше 0
+    private int capacity;
+    /**
+     * Адрес места проведения представлен экземпляром специального класса {@link data.Venue.Address}
+     * это поле может быть null
+     */
     @JacksonXmlProperty
-    private Address address; //Поле может быть null
+    private Address address;
 
+    /**
+     * Конструктор вызываемый классом строителем {@link data.VenueBuilder} для создания нового места проведения
+     * @param id значение для поля id
+     * @param name значение для поля name
+     * @param capacity значение для поля capacity
+     * @param address значение для поля address
+     */
     public Venue(int id, String name, int capacity, Address address) {
         this.id = id;
         this.name = name;
@@ -22,28 +47,27 @@ public class Venue {
         this.address = address;
     }
 
+    /**
+     * Стандартный конструктор для корректной работы парсера XML
+     */
     private Venue(){}
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
+    /**
+     * <h2>Класс описывающий сущность адреса места проведения</h2>
+     * адрес - необязательное поля места проведения
+     */
     public static class Address {
+        /**
+         * Полное название улицы, единственное поле класса полностью определяющее экземпляр
+         * это поле не может быть null, а длина строки не должна превышать 160 символов
+         */
         @JacksonXmlProperty
-        private final String street; //Длина строки не должна быть больше 160, Поле не может быть null
+        private final String street;
 
+        /**
+         * Конструктор класса
+         * @param street значение для поля street
+         */
         public Address(String street) {
             if (street.isBlank()) throw new NullPointerException("это поле не может быть пустым");
             if (street.length() > 160) throw new IllegalArgumentException("слишком длинное название. " +
@@ -51,8 +75,16 @@ public class Venue {
             this.street = street;
         }
 
+        /**
+         * Стандартный конструктор для корректной работы парсера XML
+         */
         private Address(){this.street = "костыль";}
 
+        /**
+         * Стандартный метод из класса Object для сравнения объектов
+         * @param otherObject сравниваемый объект
+         * @return истину в случае эквивалентности объектов, ложь в противном случае
+         */
         @Override
         public boolean equals(Object otherObject) {
             if (this == otherObject) return true;
@@ -61,11 +93,19 @@ public class Venue {
             return Objects.equals(street, address.street);
         }
 
+        /**
+         * Стандартный метод из класса Object для вычисления хеш-кода
+         * @return хеш-код объекта
+         */
         @Override
         public int hashCode() {
             return street.hashCode() * 3;
         }
 
+        /**
+         * Стандартный метод для строкового представления объекта
+         * @return строку включающую значения всех полей объекта
+         */
         @Override
         public String toString() {
             return "Address{" +
@@ -74,6 +114,10 @@ public class Venue {
         }
     }
 
+    /**
+     * Стандартный метод для строкового представления объекта
+     * @return строку включающую значения всех полей объекта
+     */
     @Override
     public String toString() {
         return "Venue{" +
@@ -84,6 +128,11 @@ public class Venue {
                 '}';
     }
 
+    /**
+     * Стандартный метод из класса Object для сравнения объектов
+     * @param otherObject сравниваемый объект
+     * @return истину в случае эквивалентности объектов, ложь в противном случае
+     */
     @Override
     public boolean equals(Object otherObject) {
         if (this == otherObject) return true;
@@ -93,6 +142,10 @@ public class Venue {
                 && Objects.equals(name, other.name) && Objects.equals(address, other.address);
     }
 
+    /**
+     * Стандартный метод из класса Object для вычисления хеш-кода
+     * @return хеш-код объекта
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, name, capacity, address);

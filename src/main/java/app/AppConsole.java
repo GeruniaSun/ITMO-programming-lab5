@@ -5,7 +5,16 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
+/**
+ * <h1>Класс консоли</h1>
+ * объект класса представляет консоль приложения считывающую команды
+ */
 public class AppConsole {
+    /**
+     * Метод запускающий консоль
+     * @param inStream поток ввода (стандартный или файловый)
+     * @param invoker ссылка на объект инициатора {@link app.Invoker}
+     */
     public void runApp(InputStreamReader inStream, Invoker invoker){
         Scanner in = new Scanner(inStream);
         while (in.hasNextLine()){
