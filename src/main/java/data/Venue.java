@@ -15,45 +15,29 @@ public class Venue {
     @JacksonXmlProperty
     private Address address; //Поле может быть null
 
-    {
-        this.id = nextId + 1;
-        nextId++;
+    public Venue(int id, String name, int capacity, Address address) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+        this.address = address;
     }
 
-    public static class Builder{
-        private Venue newVenue;
+    private Venue(){}
 
-        public Builder(){
-            newVenue = new Venue();
-        }
+    public int getId() {
+        return id;
+    }
 
-        public Builder(Venue venue) {
-            newVenue = new Venue();
-            newVenue.id = venue.id;
-            nextId--;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public Builder withName(String name) {
-            if (name.isBlank() | name == "") throw new NullPointerException("это поле не может быть пустым");
-            newVenue.name = name;
-            return this;
-        }
+    public int getCapacity() {
+        return capacity;
+    }
 
-        public Builder withCapacity(int capacity) {
-            if (capacity <= 0) throw new IllegalArgumentException("вместимость должна быть положительной");
-            newVenue.capacity = capacity;
-            return this;
-        }
-
-        public Builder withAddress(Address address) {
-            newVenue.address = address;
-            return this;
-        }
-
-        public Venue build(){
-            return newVenue;
-        }
-
+    public Address getAddress() {
+        return address;
     }
 
     public static class Address {

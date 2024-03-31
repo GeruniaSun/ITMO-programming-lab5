@@ -29,6 +29,7 @@ public class Main {
             System.out.println("файл успешно прочитан");
         } catch (IOException e) {
             System.out.println("Файла с таким именем не существует, либо он недоступен. Перезапустите приложение.");
+            System.out.println(e.getMessage());
         }
 
         var receiver = new Receiver(storage, filename);

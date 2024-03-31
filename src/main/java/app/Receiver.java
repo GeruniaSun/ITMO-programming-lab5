@@ -1,10 +1,7 @@
 package app;
 
 import commands.Command;
-import data.Coordinates;
-import data.Ticket;
-import data.Ticket.Builder;
-import data.Venue;
+import data.*;
 import parsing.Parser;
 
 import java.io.*;
@@ -55,7 +52,7 @@ public class Receiver {
         }
     }
 
-    private Ticket create(Builder builder){
+    private Ticket create(TicketBuilder builder){
         var in = new Scanner(new BufferedReader(this.inputStream));
 
         while (this.consoleFlag || in.hasNextLine()) {
@@ -145,7 +142,7 @@ public class Receiver {
         }
 
         if (venueFlag) {
-            var venueBuilder = new Venue.Builder();
+            var venueBuilder = new VenueBuilder();
 
             while (this.consoleFlag || in.hasNextLine()) {
                 try {
@@ -216,7 +213,7 @@ public class Receiver {
         } else throw new IllegalStateException("Что-то пошло не так во время описания билета");
     }
 
-    private Ticket createFromFile(Builder builder, List<String> args){
+    private Ticket createFromFile(TicketBuilder builder, List<String> args){
         try {
             String input = String.join(" ", args);
             ArrayList<String> values = new ArrayList<>(List.of(input.substring(1)
@@ -229,7 +226,7 @@ public class Receiver {
 
             builder.withType(Ticket.TicketType.valueOf(values.get(4)));
             if (!values.get(5).contains("null")) {
-                var venueBuilder = new Venue.Builder();
+                var venueBuilder = new VenueBuilder();
                 venueBuilder.withName(values.get(5).substring(1).replace("'", ""));
                 venueBuilder.withCapacity(Integer.parseInt(values.get(6)));
                 if (!values.get(7).contains("null"))
@@ -246,7 +243,7 @@ public class Receiver {
     }
 
     public void add(List<String> args){
-        var builder = new Ticket.Builder();
+        var builder = new TicketBuilder();
         try {
             if (consoleFlag){
                 data.add(this.create(builder));
@@ -259,7 +256,7 @@ public class Receiver {
 
     public void addIfMax(List<String> args){
         try {
-            var builder = new Ticket.Builder();
+            var builder = new TicketBuilder();
             Ticket noob;
             if (consoleFlag){
                 noob = this.create(builder);
@@ -272,7 +269,7 @@ public class Receiver {
 
     public void removeGreater(List<String> args){
         try {
-            var builder = new Ticket.Builder();
+            var builder = new TicketBuilder();
             Ticket compared;
             if (consoleFlag){
                 compared = this.create(builder);
@@ -285,7 +282,7 @@ public class Receiver {
 
     public void removeLower(List<String> args){
         try {
-            var builder = new Ticket.Builder();
+            var builder = new TicketBuilder();
             Ticket compared;
             if (consoleFlag){
                 compared = this.create(builder);
@@ -330,7 +327,7 @@ public class Receiver {
         if (oldTicket == null) System.out.println("Элемента с таким id не существует");
         else {
             try {
-                var builder = new Ticket.Builder(oldTicket);
+                var builder = new TicketBuilder(oldTicket.getId());
                 if (consoleFlag){
                     data.remove(oldTicket);
                     data.add(this.create(builder));

@@ -20,7 +20,7 @@ public class Ticket implements Comparable<Ticket> {
     private String name; //Поле не может быть null, Строка не может быть пустой
     @JacksonXmlProperty
     private Coordinates coordinates; //Поле не может быть null
-    private final LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     @JacksonXmlProperty
     private Long price; //Поле не может быть null, Значение поля должно быть больше 0
     @JacksonXmlProperty
@@ -35,74 +35,45 @@ public class Ticket implements Comparable<Ticket> {
         VIP;
     }
 
-    {
-        this.id = nextId + 1;
-        nextId++;
+    private Ticket(){}
 
-        this.creationDate = LocalDate.now();
+    public Long getId() {
+        return id;
     }
 
-    public static class Builder{
-        private Ticket newTicket;
+    public String getName() {
+        return name;
+    }
 
-        public Builder(){
-            newTicket = new Ticket();
-        }
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
 
-        public Builder(Ticket ticket) {
-            newTicket = new Ticket();
-            newTicket.id = ticket.id;
-            nextId--;
-        }
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
 
-        public Builder withName(String name) {
-            if (name.isBlank()) throw new NullPointerException("это поле не может быть пустым");
-            newTicket.name = name;
-            return this;
-        }
-
-        public Builder withCoordinates(Coordinates coordinates) {
-            if (coordinates == null) throw new NullPointerException("это поле не может быть пустым");
-            newTicket.coordinates = coordinates;
-            return this;
-        }
-
-        public Builder withPrice(Long price) {
-            if (price == null | price <= 0) throw new IllegalArgumentException("цена должна быть положительной");
-            newTicket.price = price;
-            return this;
-        }
-
-        public Builder withType(TicketType type) {
-            if (type == null ) throw new NullPointerException("это поле не может быть пустым");
-            newTicket.type = type;
-            return this;
-        }
-
-        public Builder withVenue(Venue venue) {
-            newTicket.venue = venue;
-            return this;
-        }
-
-        public boolean isReadyToBuild(){
-            return !(newTicket.name == null
-                    || newTicket.coordinates == null
-                    || newTicket.price == null
-                    || newTicket.type == null);
-        }
-
-        public Ticket build(){
-            return newTicket;
-        }
-
+    public Long getPrice() {
+        return price;
     }
 
     public TicketType getType() {
         return type;
     }
 
-    public Long getId() {
-        return id;
+    public Venue getVenue() {
+        return venue;
+    }
+
+    public Ticket(Long id, String name, Coordinates coordinates, LocalDate creationDate,
+                  Long price, TicketType type, Venue venue) {
+        this.id = id;
+        this.name = name;
+        this.coordinates = coordinates;
+        this.creationDate = creationDate;
+        this.price = price;
+        this.type = type;
+        this.venue = venue;
     }
 
     @Override
