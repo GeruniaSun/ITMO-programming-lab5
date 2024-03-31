@@ -34,6 +34,6 @@ public class Main {
 
         var receiver = new Receiver(storage,filename);
         var invoker = new Invoker(receiver);
-        invoker.runApp(new InputStreamReader(System.in));
+        //invoker.runApp(new InputStreamReader(System.in));
     }
 }

@@ -28,7 +28,7 @@ public class Ticket implements Comparable<Ticket> {
     @JacksonXmlProperty
     private Venue venue; //Поле может быть null
 
-    public enum TicketType implements Comparable<TicketType> {
+    public enum TicketType {
         CHEAP,
         BUDGETARY,
         USUAL,

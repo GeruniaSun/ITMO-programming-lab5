@@ -15,11 +15,10 @@ import java.util.*;
 public class Receiver {
     private final Set<Ticket> data;
     private final String filename;
-    private final int recursionLimit = 100;
     private InputStreamReader inputStream = new InputStreamReader(System.in);
     private InputStreamReader lastInputStream = new InputStreamReader(System.in);
     private boolean consoleFlag = true;
-    private Set<Path> recursionDefense = new HashSet<Path>();
+    private final Set<Path> recursionDefense = new HashSet<>();
 
     public Receiver(Set<Ticket> data, String filename) {
         this.data = data;
@@ -28,9 +27,7 @@ public class Receiver {
 
     public void help(Collection<Command> commands){
         System.out.println("вот список доступных вам команд: ");
-        commands.forEach(cmd -> {
-            System.out.println(cmd.description());
-        });
+        commands.forEach(cmd -> System.out.println(cmd.description()));
     }
 
     public void info(){
@@ -334,6 +331,7 @@ public class Receiver {
             try {
                 var builder = new Ticket.Builder(oldTicket);
                 if (consoleFlag){
+                    data.remove(oldTicket);
                     data.add(this.create(builder));
                 } else data.add(this.createFromFile(builder, args));
                 System.out.println("Значения полей элемента успешно обновлены");
@@ -359,6 +357,7 @@ public class Receiver {
         System.out.println("достигнут конец файла " + filename);
         this.setInputStream(this.lastInputStream);
         this.setConsoleFlag(true);
+        this.recursionDefense.clear();
     }
 
     public void setInputStream(InputStreamReader inputStream) {
