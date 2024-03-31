@@ -1,5 +1,6 @@
-package commands;
+package app;
 
+import commands.Command;
 import data.Coordinates;
 import data.Ticket;
 import data.Ticket.Builder;
@@ -352,8 +353,9 @@ public class Receiver {
         this.setInputStream(fileIn);
         this.setConsoleFlag(false);
         var fileInvoker = new Invoker(this);
+        var fileConsole = new AppConsole();
         System.out.println("начинаю читать ваш скрипт...");
-        fileInvoker.runApp(fileIn);
+        fileConsole.runApp(fileIn, fileInvoker);
         System.out.println("достигнут конец файла " + filename);
         this.setInputStream(this.lastInputStream);
         this.setConsoleFlag(true);

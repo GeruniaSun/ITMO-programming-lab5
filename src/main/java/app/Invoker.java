@@ -1,7 +1,6 @@
-package commands;
+package app;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import commands.*;
 import java.util.*;
 
 public class Invoker {
@@ -26,30 +25,8 @@ public class Invoker {
         commandMap.put("execute_script", new ExecuteScript(receiver));
     }
 
-    public void runApp(InputStreamReader inStream){
-        Scanner in = new Scanner(inStream);
-        while (in.hasNextLine()){
-            try {
-                var input = in.nextLine();
-                if (input.isBlank()) {throw new NullPointerException("Вы ничего не ввели");}
-                List<String> commandWithArgs = List.of(input.split(" "));
-                String commandName = commandWithArgs.get(0);
-                List<String> commandArguments = null;
-                if (commandWithArgs.size() >= 2){
-                    commandArguments = commandWithArgs.subList(1, commandWithArgs.size());
-                }
-                this.runCommand(commandMap.get(commandName), commandArguments);
-            } catch (NoSuchElementException e) {
-                System.out.println("вы какие-то гадости делаете. Закрываю приложение");
-                System.exit(999);
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
-    private void runCommand(Command command, List<String> args){
+    void runCommand(String commandName, List<String> args){
+        Command command = this.commandMap.get(commandName);
         if (command == null) throw new NullPointerException("Такой команды не существует. " + "\n" +
                 "Используйте 'help' чтоб получить справку по доступным командам");
         command.execute(args);

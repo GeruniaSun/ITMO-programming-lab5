@@ -1,5 +1,6 @@
 package commands;
 
+import app.Receiver;
 import data.Ticket;
 
 import java.util.Arrays;

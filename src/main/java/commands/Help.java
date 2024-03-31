@@ -1,5 +1,7 @@
 package commands;
 
+import app.Receiver;
+
 import java.util.Collection;
 import java.util.List;
 

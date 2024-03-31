@@ -1,5 +1,7 @@
 package commands;
 
+import app.Receiver;
+
 import java.io.FileNotFoundException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
