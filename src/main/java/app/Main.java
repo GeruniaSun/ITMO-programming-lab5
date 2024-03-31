@@ -23,15 +23,15 @@ public class Main {
 
         var filename = args[0];
         var storageFile = new File(filename);
-        Set<Ticket> storage = null;
+        Storage storage = null;
         try {
-            storage = new LinkedHashSet<>(Parser.getFromFile(storageFile));
+            storage = new Storage(new LinkedHashSet<>(Parser.getFromFile(storageFile)));
             System.out.println("файл успешно прочитан");
         } catch (IOException e) {
             System.out.println("Файла с таким именем не существует, либо он недоступен. Перезапустите приложение.");
         }
 
-        var receiver = new Receiver(storage,filename);
+        var receiver = new Receiver(storage, filename);
         var invoker = new Invoker(receiver);
         var console = new AppConsole();
         console.runApp(new InputStreamReader(System.in), invoker);

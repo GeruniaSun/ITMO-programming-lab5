@@ -14,15 +14,15 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class Receiver {
-    private final Set<Ticket> data;
+    private final Collection<Ticket> data;
     private final String filename;
     private InputStreamReader inputStream = new InputStreamReader(System.in);
     private InputStreamReader lastInputStream = new InputStreamReader(System.in);
     private boolean consoleFlag = true;
     private final Set<Path> recursionDefense = new HashSet<>();
 
-    public Receiver(Set<Ticket> data, String filename) {
-        this.data = data;
+    public Receiver(Storage data, String filename) {
+        this.data = data.collection();
         this.filename = filename;
     }
 
