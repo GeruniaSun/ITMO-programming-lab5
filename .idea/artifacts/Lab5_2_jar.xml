@@ -2,8 +2,8 @@
   <artifact type="jar" build-on-make="true" name="Lab5.2:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/Lab5_2_jar</output-path>
     <root id="archive" name="Lab5.2.jar">
-      <element id="module-output" name="Lab5.2" />
-      <element id="module-test-output" name="Lab5.2" />
+      <element id="module-output" name="Lab5" />
+      <element id="module-test-output" name="Lab5" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/jackson/core/jackson-annotations/2.17.0/jackson-annotations-2.17.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/fasterxml/woodstox/woodstox-core/6.6.1/woodstox-core-6.6.1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/bytebuddy/byte-buddy/1.14.9/byte-buddy-1.14.9.jar" path-in-jar="/" />
